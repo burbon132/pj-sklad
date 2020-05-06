@@ -82,13 +82,13 @@ void SortbyAmount(List& lst)
 {
 	for (int i = 0; i < lst.GetSize() - 1; i++)
 	{
-		for (int j = i; j < lst.GetSize() - 1; j++)
+		for (int j = i + 1; j < lst.GetSize(); j++)
 		{
-			int O = lst[j].GetAmount();
-			int O1 = lst[j + 1].GetAmount();
+			int O = lst[i].GetAmount();
+			int O1 = lst[j].GetAmount();
 			if (O < O1)
 			{
-				lst.Swap(lst, j, j + 1);
+				lst.Swap(lst, i, j);
 			}
 		}
 	}
@@ -333,7 +333,7 @@ void OptionalInterface(List& lst)
 				SectionCheck(lst,newlist, i);
 				cout << "Хотите сохранить данные на диск(Да для сохранения / Любое другое для продолжения без сохранения)?" << endl;
 				cin >> check; cout << endl;
-				if (strcmp(check,"Да"))
+				if (strcmp(check,"Да")==0)
 				{
 					Save2Disk(newlist);
 					cout << "Сохранено" << endl;
