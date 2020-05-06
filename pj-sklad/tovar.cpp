@@ -49,7 +49,7 @@ Tovar::ShelfLife::ShelfLife(int day, int month, int year)
 
 ostream& operator<<(ostream& out, Tovar& tovar)
 {
-	out << "Секция номер: "  << tovar.GetSectionNumber() << endl << tovar.GetName() << endl << tovar.GetPrice() << endl << tovar.GetAmount() << endl << tovar.BD.GetDay() << "." << tovar.BD.GetMonth() << "." << tovar.BD.GetYear() << endl << endl;
+	out << "Секция номер: "  << tovar.GetSectionNumber() << endl << tovar.GetName() << "\t" << tovar.GetPrice() << "\t" << tovar.GetAmount() << "\t" << tovar.BD.GetDay() << "." << tovar.BD.GetMonth() << "." << tovar.BD.GetYear() << endl << endl;
 	return out;
 }
 
