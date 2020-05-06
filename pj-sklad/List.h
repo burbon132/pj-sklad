@@ -10,7 +10,7 @@ public:
 
 	void pop_front();
 
-	void push_back(Tovar student, List& lst);
+	void push_back(Tovar tovar, List& lst, int c);
 
 	void clear();
 

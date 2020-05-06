@@ -19,14 +19,14 @@ void List::pop_front()
 	Size--;
 }
 
-void List::push_back(Tovar tovar, List& lst)
+void List::push_back(Tovar tovar, List& lst, int c)
 {
 	bool check = false;
 	for (int i = 0; i < lst.GetSize(); i++)
 	{
 		if (strcmp(lst[i].GetName(), tovar.GetName()) == 0 && lst[i].GGetDay() == tovar.GGetDay() && lst[i].GGetMonth() == tovar.GGetMonth() && lst[i].GGetYear() == tovar.GGetYear())
 		{
-			lst[i].SetAmount(lst[i].GetAmount() + 1);
+			lst[i].SetAmount(lst[i].GetAmount() + c);
 			check = true;
 		}
 	}

@@ -11,6 +11,7 @@ void SectionCheck(List& lst, List& newlst, int SectionNumber);
 void Eldest(List& lst, List& eldestlst);
 void Junior(List& lst, List& juniorlst);
 void SortList(List& lst);
+void CheckShelfLife(List& lst);
 void Save2Disk(List& lst);
 void Read4Disk(List& lst);
 void MainInterface();
