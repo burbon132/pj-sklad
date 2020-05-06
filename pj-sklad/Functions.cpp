@@ -68,7 +68,7 @@ void CheckShelfLife(List& lst)
 	const time_t rawtime = time(NULL);
 	struct tm* timeinfo;
 	timeinfo = localtime(&rawtime);
-	for (int i = 1; i < lst.GetSize(); i++)
+	for (int i = 0; i < lst.GetSize(); i++)
 	{
 		if ((timeinfo->tm_year + 1900) * 10000 + (timeinfo->tm_mon + 1) * 100 + timeinfo->tm_mday > lst[i].GGetYear() * 10000 + lst[i].GGetMonth() * 100 + lst[i].GGetDay())
 		{
@@ -97,7 +97,7 @@ void SortbyAmount(List& lst)
 void Save2Disk(List& lst)
 {
 	string path;
-	cout << "Введите путь в конкретную папку и название для файла( %Name%.txt ) или только название для файла( %Name%.txt )(Файл будет сохранен в папке с программой)" << endl;
+	cout << "Введите название файла" << endl;
 	cin >> path;
 	ofstream fout;
 	fout.open(path);
@@ -196,6 +196,7 @@ void OptionalInterface(List& lst)
 	while (sas)
 	{
 		cout << "Выберите цифру нужной функции меню:" << endl << endl;
+		cout << "0) Перейти в главное меню" << endl << endl;
 		cout << "1) Добавить новый товар" << endl;
 		cout << "2) Удалить товар по названию" << endl;
 		cout << "3) Отсортировать список по количеству товара" << endl;
@@ -203,13 +204,18 @@ void OptionalInterface(List& lst)
 		cout << "5) Определить все товары заданной секции" << endl;
 		cout << "6) Найти все просроченные товары" << endl;
 		cout << "7) Сохранить список" << endl;
-		cout << "8) Просмотреть товары в списке" << endl;
-		cout << "9) Удалить все товары из списка" << endl;
-		cout << "10) Перейти в главное меню" << endl << endl;
+		cout << "8) Удалить все товары из списка" << endl;
+		cout << "9) Просмотреть товары в списке" << endl;
 
 		cin >> MenuBtn;
 		switch (MenuBtn)
 		{
+		case(0):
+		{
+			system("cls");
+			sas = false;
+			break;
+		}
 		case(1):
 		{
 			system("cls");
@@ -248,8 +254,12 @@ void OptionalInterface(List& lst)
 			{	
 				system("cls");
 				char* DeleteName = new char;
+				SetConsoleCP(1251);
+				SetConsoleOutputCP(1251);
 				cout << "Название товара: "; cin >> DeleteName;
 				DeleteByName(lst,DeleteName);
+				SetConsoleCP(866);
+				SetConsoleOutputCP(866);
 				cout << "\nТовар удален" << endl;
 				system("pause");
 				system("cls");
@@ -383,9 +393,8 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				for (int i = 0; i < lst.GetSize(); i++) {
-					cout << lst[i];
-				}
+				lst.clear();
+				cout << "Очищенно" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -404,8 +413,9 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				lst.clear();
-				cout << "Очищенно" << endl;
+				for (int i = 0; i < lst.GetSize(); i++) {
+					cout << lst[i];
+				}
 				system("pause");
 				system("cls");
 				break;
@@ -418,12 +428,6 @@ void OptionalInterface(List& lst)
 				system("cls");
 				break;
 			}
-		}
-		case(10):
-		{
-			system("cls");
-			sas = false;
-			break;
 		}
 		default:
 			system("cls");

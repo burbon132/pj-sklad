@@ -1,6 +1,5 @@
 #include "List.h"
 
-
 List::List()
 {
 	Size = 0;
