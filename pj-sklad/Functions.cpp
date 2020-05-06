@@ -84,7 +84,9 @@ void SortbyAmount(List& lst)
 	{
 		for (int j = i; j < lst.GetSize() - 1; j++)
 		{
-			if (lst[j].GetAmount() > lst[j + 1].GetAmount())
+			int O = lst[j].GetAmount();
+			int O1 = lst[j + 1].GetAmount();
+			if (O < O1)
 			{
 				lst.Swap(lst, j, j + 1);
 			}
@@ -130,7 +132,6 @@ void Read4Disk(List& lst)
 	double Price;
 	int	Amount;
 	char tresh;
-	int NumberGroup;
 	int day;
 	int month;
 	int year;
@@ -213,28 +214,27 @@ void OptionalInterface(List& lst)
 		{
 			system("cls");
 			int counter;
+			int SectionNumber;
 			char* Name = new char;
-			char* LastName = new char;
-			char* TrainingDirection = new char;
+			double Price;
+			int	Amount;
 			char trash;
-			int NumberGroup;
 			int day;
 			int month;
 			int year;
-			cout << "Сколько студентов хотите добавить?" << endl << endl; cin >> counter;
+			cout << "Какое количество товаров добавить?" << endl << endl; cin >> counter;
 			system("cls");
-			cout << "Введите данные о студенте в формате:" << endl;
+			cout << "Введите данные товара:" << endl;
 			SetConsoleCP(1251);
 			SetConsoleOutputCP(1251);
 			for (int i = 0; i < counter; i++)
 			{
-
-				cout << "Фамилия: "; cin >> LastName;
-				cout << "Имя: "; cin >> Name;
-				cout << "Направление подготовки: "; cin >> TrainingDirection;
-				cout << "Номер группы: "; cin >> NumberGroup;
-				cout << "День рождения в формате: дд.мм.гггг: "; cin >> day >> trash >> month >> trash >> year;
-				lst.push_front(Tovar(Name, LastName, TrainingDirection, NumberGroup, day, month, year, 0));
+				cout << "Номер секции: "; cin >> SectionNumber;
+				cout << "Название товара: "; cin >> Name;
+				cout << "Цена: "; cin >>Price;
+				cout << "Количество: "; cin >> Amount;
+				cout << "Годен до (дд.мм.гггг): "; cin >> day >> trash >> month >> trash >> year;
+				lst.push_back(Tovar(SectionNumber, Name, Price, Amount, day, month, year, 0), lst, Amount);
 				system("pause");
 				system("cls");
 			}
@@ -243,19 +243,14 @@ void OptionalInterface(List& lst)
 			break;
 		}
 		case(2):
-		{
+		{	
 			if (lst.GetSize() != 0)
-			{
+			{	
 				system("cls");
-				for (int i = 0; i < lst.GetSize(); i++) {
-					cout << "Index: " << i << endl << lst[i];
-
-				}
-				int index;
-				cout << "Введите номер студента, которого хотите удалить: "; cin >> index;
-				lst.removeAt(index);
-				system("cls");
-				cout << "Выполнено((" << endl;
+				char* DeleteName = new char;
+				cout << "Название товара: "; cin >> DeleteName;
+				DeleteByName(lst,DeleteName);
+				cout << "\nТовар удален" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -263,7 +258,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -274,8 +269,8 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				SortList(lst);
-				cout << "Выполнено!" << endl;
+				SortbyAmount(lst);
+				cout << "Отсортированно" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -283,7 +278,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -294,56 +289,19 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				int index;
-				bool ex = true;
-				List eldlst;
-				List junlst;
-				while (ex)
-				{
-					cout << "1) Найти младшего студента\n2) Найти старшего студента" << endl << endl;
-					cin >> index;
-					system("cls");
-					switch (index)
-					{
-					case(1):
-					{
-						Junior(lst, junlst);
-						cout << "Самый(ые) молодой(ые) студент(ы):" << endl << endl;
-						for (int i = 0; i < junlst.GetSize(); i++)
-						{
-							cout << junlst[i];
-						}
-						ex = false;
-						system("pause");
-						system("cls");
-						break;
-					}
-					case(2):
-					{
-						Eldest(lst, eldlst);
-						cout << "Самый(ые) старший(ые) студент(ы)" << endl << endl;
-						for (int i = 0; i < eldlst.GetSize(); i++)
-						{
-							cout << eldlst[i];
-						}
-						ex = false;
-						system("pause");
-						system("cls");
-						break;
-					}
-					default:
-						cout << "ERROR404: Цифра не найдена xDD" << endl;
-						system("pause");
-						system("cls");
-						break;
-					}
-				}
+				int i;
+				cout << "Какое количество товара необходимо?" << endl;
+				cin >> i;
+				AmountCheck(lst,i);
+				cout << "\nОтсортированно" << endl;
+				system("pause");
+				system("cls");
 				break;
 			}
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -354,21 +312,18 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				char* TD = new char;
-				int NG;
-				int index;
-				List newlst;
-				SetConsoleCP(1251);
-				SetConsoleOutputCP(1251);
-				cout << "Введите направление и номер группы в формате: РТ 12" << endl; cin >> TD >> NG; cout << endl;
-				Compare(lst, newlst, TD, NG);
-				SetConsoleCP(866);
-				SetConsoleOutputCP(866);
-				cout << "Если хотите сохранить список введите 1, для продолжение без сохранения введите любое другое число" << endl;
-				cin >> index; cout << endl;
-				if (index == 1) {
-					Save2Disk(newlst);
-					cout << "Файл сохранен!" << endl;
+				List newlist;
+				int i;
+				char* check = new char;
+				cout << "Введите номер секции" << endl;
+				cin >> i;
+				SectionCheck(lst,newlist, i);
+				cout << "Хотите сохранить данные на диск(Да для сохранения / Любое другое для продолжения без сохранения)?" << endl;
+				cin >> check; cout << endl;
+				if (strcmp(check,"Да"))
+				{
+					Save2Disk(newlist);
+					cout << "Сохранено" << endl;
 				}
 				system("pause");
 				system("cls");
@@ -377,7 +332,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -387,14 +342,8 @@ void OptionalInterface(List& lst)
 		{
 			if (lst.GetSize() != 0)
 			{
-				SetConsoleCP(1251);
-				SetConsoleOutputCP(1251);
 				system("cls");
-				char* TD = new char;
-				cout << "Введите направление в формате: РТ" << endl; cin >> TD;	cout << endl;
-				Compare(lst, TD);
-				SetConsoleCP(866);
-				SetConsoleOutputCP(866);
+				CheckShelfLife(lst);
 				system("pause");
 				system("cls");
 				break;
@@ -402,7 +351,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -414,7 +363,8 @@ void OptionalInterface(List& lst)
 			{
 				system("cls");
 				Save2Disk(lst);
-				cout << "Выполнено!" << endl;
+				system("cls");
+				cout << "Сохранено" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -422,7 +372,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -443,7 +393,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -455,7 +405,7 @@ void OptionalInterface(List& lst)
 			{
 				system("cls");
 				lst.clear();
-				cout << "Выполнено((\n" << endl;
+				cout << "Очищенно" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -463,7 +413,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Товары в листе отсустввуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -477,7 +427,7 @@ void OptionalInterface(List& lst)
 		}
 		default:
 			system("cls");
-			cout << "ERROR404: Цифра не найдена xDD" << endl;
+			cout << "Функции с таким номером не существует, выберите другую цифру" << endl;
 			system("pause");
 			system("cls");
 			break;

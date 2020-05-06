@@ -47,7 +47,11 @@ Tovar::ShelfLife::ShelfLife(int day, int month, int year)
 	this->year = year;
 }
 
-//////////////////////////////////////////////////////////////SETTERS/////////////////////////////////////////////////////////////////
+ostream& operator<<(ostream& out, Tovar& tovar)
+{
+	out << "Секция номер: "  << tovar.GetSectionNumber() << endl << tovar.GetName() << endl << tovar.GetPrice() << endl << tovar.GetAmount() << endl << tovar.BD.GetDay() << "." << tovar.BD.GetMonth() << "." << tovar.BD.GetYear() << endl << endl;
+	return out;
+}
 
 void Tovar::SetName(char* Name)
 {
@@ -99,8 +103,6 @@ void Tovar::ShelfLife::SetYear(int year)
 	this->year = year;
 }
 
-//////////////////////////////////////////////////////////////GETTERS/////////////////////////////////////////////////////////////////
-
 char* Tovar::GetName()
 {
 	return this->Name;
@@ -149,12 +151,4 @@ int Tovar::ShelfLife::GetMonth()
 int Tovar::ShelfLife::GetYear()
 {
 	return this->year;
-}
-
-/////////////////////////////////////////////////////////////OPERATORS/////////////////////////////////////////////////////////////////
-
-ostream& operator<<(ostream& out, Tovar& tovar)
-{
-	out << "Товар:" << endl << tovar.GetSectionNumber() << endl << tovar.GetName() << endl << tovar.GetPrice() << endl << tovar.GetAmount() << endl << tovar.BD.GetDay() << "." << tovar.BD.GetMonth() << "." << tovar.BD.GetYear() << endl << endl;
-	return out;
 }
